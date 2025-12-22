@@ -1,4 +1,4 @@
-import React from "react";
+import Link from "next/link";
 
 const PublicFooter = () => {
   return (
@@ -27,12 +27,12 @@ const PublicFooter = () => {
             <h3 className="font-semibold text-foreground">Quick Links</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a
-                  href="#"
+                <Link
+                  href="/tours"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   Browse Tours
-                </a>
+                </Link>
               </li>
               <li>
                 <a
@@ -66,36 +66,36 @@ const PublicFooter = () => {
             <h3 className="font-semibold text-foreground">Support</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a
-                  href="#"
+                <Link
+                  href="/about"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
-                  Help Center
-                </a>
+                  Learn More
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  href="/contact"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   Contact Us
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  href="/policy"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   Booking Policy
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  href="/frequently-asked-questions"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   FAQ
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -164,9 +164,9 @@ const PublicFooter = () => {
         <div className="border-t border-border pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
           <p>&copy; 2025 Local Guide. All rights reserved.</p>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-primary transition-colors">
+            <Link href="/policy" className="hover:text-primary transition-colors">
               Privacy Policy
-            </a>
+            </Link>
             <a href="#" className="hover:text-primary transition-colors">
               Terms of Service
             </a>

@@ -32,7 +32,7 @@ const Guidedashboard = async () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-4xl font-bold">{rating.toFixed(1)}</p>
+            <p className="text-4xl font-bold">{rating}</p>
           </CardContent>
         </Card>
 
@@ -115,7 +115,7 @@ const Guidedashboard = async () => {
               {latestReviews.map((review) => (
                 <div key={review.id} className="border p-3 rounded-md">
 
-                  <p className="text-xs text-gray-600 mb-1">
+                  <p className="text-xs text-primary mb-1">
                     From: <span className="font-medium">{review.tourist.name}</span>
                   </p>
 
@@ -123,7 +123,7 @@ const Guidedashboard = async () => {
                     ⭐ {review.rating}/5
                   </p>
 
-                  <p className="text-sm mt-1 text-gray-700">
+                  <p className="text-sm mt-1 text-foreground">
                     {review.comment}
                   </p>
 

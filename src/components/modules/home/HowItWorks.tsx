@@ -26,7 +26,7 @@ export default function HowItWorks() {
   ]
 
   return (
-    <section className="py-20 bg-linear-to-b from-background to-highlight/5">
+    <section className="py-20 bg-linear-to-r from-primary/5 via-secondary/5 to-accent/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16 space-y-4">
           <div className="inline-block bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-medium">

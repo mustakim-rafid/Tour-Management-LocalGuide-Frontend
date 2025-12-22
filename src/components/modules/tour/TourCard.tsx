@@ -11,7 +11,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ITour } from "@/types/tour.interface";
-import { Calendar, DollarSign, Eye, Loader2, MapPin, Users } from "lucide-react";
+import {
+  Calendar,
+  DollarSign,
+  Eye,
+  Loader2,
+  MapPin,
+  Users,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -29,47 +36,47 @@ interface TourCardProps {
 
 export default function TourCard({ tour }: TourCardProps) {
   const [openBooking, setOpenBooking] = useState(false);
-  const [loading, setLoading] = useState(false)
-  const router = useRouter()
-  const pathName = usePathname()
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const pathName = usePathname();
 
   const handleBookTourClicked = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
-        const accessToken = await getCookie("accessToken")
+      const accessToken = await getCookie("accessToken");
 
-    if(!accessToken) {
+      if (!accessToken) {
         router.push(`/login?redirect=${pathName}`);
-        return
-    }
+        return;
+      }
 
-    setOpenBooking(true)
+      setOpenBooking(true);
     } catch (error) {
-        console.error(error)
-        toast.error("Something went wrong after trying to book tour")
+      console.error(error);
+      toast.error("Something went wrong after trying to book tour");
     } finally {
-        setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const handleBookTourConfirm = async (tourId: string) => {
     try {
-        const result = await createBooking({tourId})
-        if (!result.success) {
-            toast.error(result.message || "Tour booking failed")
-            return
-        }
-        toast.success(result.message)
-        router.push("/dashboard/my-trips")
+      const result = await createBooking({ tourId });
+      if (!result.success) {
+        toast.error(result.message || "Tour booking failed");
+        return;
+      }
+      toast.success(result.message);
+      router.push("/dashboard/my-trips");
     } catch (error) {
-        console.error(error)
-        toast.error("Something went wrong while confirming booking")
+      console.error(error);
+      toast.error("Something went wrong while confirming booking");
     }
-  }
+  };
 
   return (
     <>
-      <Card className="overflow-hidden hover:shadow-lg transition-shadow">
+      <Card className="flex flex-col overflow-hidden hover:shadow-lg transition-shadow">
         {/* Image */}
         <div className="relative h-80 w-full overflow-hidden">
           <Image
@@ -100,7 +107,7 @@ export default function TourCard({ tour }: TourCardProps) {
           )}
         </CardHeader>
 
-        <CardContent className="space-y-3 pb-3 text-sm">
+        <CardContent className="space-y-3 pb-3 text-sm flex-1">
           {/* Tour date */}
           <div className="flex items-center gap-2 text-muted-foreground">
             <Calendar className="h-4 w-4" />
@@ -136,14 +143,21 @@ export default function TourCard({ tour }: TourCardProps) {
 
         <CardFooter className="border-t flex gap-2">
           <Link className="flex-1" href={`/tours/${tour.id}`}>
-            <Button variant="outline" className="w-full dark:hover:text-gray-300">
+            <Button
+              variant="outline"
+              className="w-full dark:hover:text-gray-300"
+            >
               <Eye className="h-4 w-4 mr-2" />
               View Details
             </Button>
           </Link>
 
           <Button className="flex-1" onClick={handleBookTourClicked}>
-            {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Book Tour"}
+            {loading ? (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            ) : (
+              "Book Tour"
+            )}
           </Button>
         </CardFooter>
       </Card>

@@ -29,12 +29,13 @@ export default function BookTourDialog({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Book Tour: {tour.title}</DialogTitle>
+          <DialogTitle className="text-xl font-semibold">Book Tour</DialogTitle>
+          <p className="text-sm text-muted-foreground">{tour.title}</p>
         </DialogHeader>
 
-        <div className="space-y-4">
+        <div className="space-y-6">
           {/* Tour Image */}
-          <div className="relative w-full h-56 rounded-lg overflow-hidden shadow-md">
+          <div className="relative w-full h-56 rounded-xl overflow-hidden border shadow-sm">
             {tour.image ? (
               <Image
                 src={tour.image}
@@ -50,40 +51,53 @@ export default function BookTourDialog({
           </div>
 
           {/* Tour Details */}
-          <div className="space-y-2">
-            <p>
-              <span className="font-medium">Date:</span>{" "}
-              {format(new Date(tour.tourDate), "EEEE, MMMM d, yyyy")}
-            </p>
-            <p>
-              <span className="font-medium">Fee:</span> BDT {tour.tourFee}
-            </p>
-            <p>
-              <span className="font-medium">Duration:</span> {tour.duration}
-            </p>
-            <p>
-              <span className="font-medium">Meeting Point:</span>{" "}
-              {tour.meetingPoint}
-            </p>
-            <p>
-              <span className="font-medium">Max Group Size:</span>{" "}
-              {tour.maxGroupSize}
-            </p>
+          <div className="rounded-lg border bg-muted/30 p-4 space-y-2 text-sm">
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Date</span>
+              <span className="font-medium">
+                {format(new Date(tour.tourDate), "EEEE, MMMM d, yyyy")}
+              </span>
+            </div>
+
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Fee</span>
+              <span className="font-medium">BDT {tour.tourFee}</span>
+            </div>
+
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Duration</span>
+              <span className="font-medium">{tour.duration}</span>
+            </div>
+
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Meeting Point</span>
+              <span className="font-medium text-right">
+                {tour.meetingPoint}
+              </span>
+            </div>
+
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Max Group Size</span>
+              <span className="font-medium">{tour.maxGroupSize}</span>
+            </div>
+
             {tour.guide && (
-              <p>
-                <span className="font-medium">Guide:</span> {tour.guide.name}{" "}
-                ({tour.guide.experienceYears} yrs exp)
-              </p>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Guide</span>
+                <span className="font-medium">
+                  {tour.guide.name} ({tour.guide.experienceYears} yrs exp)
+                </span>
+              </div>
             )}
           </div>
 
-          <p className="text-sm text-muted-foreground mt-2">
+          <p className="text-sm text-muted-foreground">
             Are you sure you want to book this tour? You can cancel it anytime
             before payment.
           </p>
         </div>
 
-        <DialogFooter className="mt-4 flex justify-end gap-2">
+        <DialogFooter className="mt-6 flex justify-end gap-2">
           <Button variant="secondary" onClick={onClose}>
             Cancel
           </Button>

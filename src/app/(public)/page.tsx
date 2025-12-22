@@ -1,11 +1,12 @@
 export const dynamic = "force-dynamic"; 
 
-import Contact from "@/components/modules/home/Contact";
 import CTA from "@/components/modules/home/CTA";
+import FAQ from "@/components/modules/home/FAQ";
 import Hero from "@/components/modules/home/Hero";
 import HowItWorks from "@/components/modules/home/HowItWorks";
 import Tours from "@/components/modules/home/Tours";
 import WhyChooseUs from "@/components/modules/home/WhyChooseUs";
+import { Separator } from "@/components/ui/separator";
 import { getAllTours } from "@/services/tour/tour.service";
 
 export default async function Home() {
@@ -16,11 +17,14 @@ export default async function Home() {
   return (
     <>
       <Hero />
+      <Separator />
       <HowItWorks />
+      <Separator />
       <Tours toursData={tours} />
       <CTA />
       <WhyChooseUs />
-      <Contact />
+      <Separator />
+      <FAQ />
     </>
   );
 }

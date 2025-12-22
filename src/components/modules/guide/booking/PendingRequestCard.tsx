@@ -2,15 +2,31 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { ITour } from "@/types/tour.interface";
 import { Calendar, DollarSign, MapPin, Users } from "lucide-react";
 import Image from "next/image";
 import { format } from "date-fns";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
-import { cancelBooking, confirmBooking } from "@/services/booking/booking.service";
+import {
+  cancelBooking,
+  confirmBooking,
+} from "@/services/booking/booking.service";
 import { useRouter } from "next/navigation";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 interface PendingRequestCardProps {
   tour: ITour;
@@ -22,7 +38,10 @@ export default function PendingRequestCard({ tour }: PendingRequestCardProps) {
   const [_, startTransition] = useTransition();
   const router = useRouter();
 
-  const handleAction = async (bookingId: string, action: "CONFIRMED" | "CANCELED") => {
+  const handleAction = async (
+    bookingId: string,
+    action: "CONFIRMED" | "CANCELED"
+  ) => {
     setLoadingId(bookingId);
     try {
       let result;
@@ -51,7 +70,12 @@ export default function PendingRequestCard({ tour }: PendingRequestCardProps) {
     <Card className="overflow-hidden hover:shadow-lg transition-shadow">
       {/* Tour Image */}
       <div className="relative h-60 w-full overflow-hidden">
-        <Image src={tour.image} alt={tour.title} fill className="object-cover" />
+        <Image
+          src={tour.image}
+          alt={tour.title}
+          fill
+          className="object-cover"
+        />
       </div>
 
       <CardHeader>
@@ -83,31 +107,51 @@ export default function PendingRequestCard({ tour }: PendingRequestCardProps) {
           <span className="font-semibold">BDT {tour.tourFee}</span>
         </div>
 
-        {/* Bookings List */}
-        <div className="pt-2">
-          {pendingBookings.map((booking) => (
-            <div key={booking.id} className="flex items-center justify-between border-b py-1">
-              <span>{booking.tourist.name}</span>
-              <div className="flex gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  disabled={loadingId === booking.id}
-                  onClick={() => handleAction(booking.id, "CANCELED")}
+        {/* Pending Bookings Dialog */}
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant="outline" className="w-full">
+              View Pending Requests
+            </Button>
+          </DialogTrigger>
+
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <DialogTitle>Pending Booking Requests</DialogTitle>
+            </DialogHeader>
+
+            <div className="max-h-64 overflow-y-auto space-y-2 pt-2">
+              {pendingBookings.map((booking) => (
+                <div
+                  key={booking.id}
+                  className="flex items-center justify-between border-b py-2"
                 >
-                  Cancel
-                </Button>
-                <Button
-                  size="sm"
-                  disabled={loadingId === booking.id}
-                  onClick={() => handleAction(booking.id, "CONFIRMED")}
-                >
-                  Confirm
-                </Button>
-              </div>
+                  <span className="text-sm font-medium">
+                    {booking.tourist.name}
+                  </span>
+
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      disabled={loadingId === booking.id}
+                      onClick={() => handleAction(booking.id, "CANCELED")}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      size="sm"
+                      disabled={loadingId === booking.id}
+                      onClick={() => handleAction(booking.id, "CONFIRMED")}
+                    >
+                      Confirm
+                    </Button>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </DialogContent>
+        </Dialog>
       </CardContent>
     </Card>
   );

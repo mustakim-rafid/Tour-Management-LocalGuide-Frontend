@@ -1,6 +1,5 @@
 import TourHeader from "@/components/modules/guide/tour/TourHeader"
 import TourTable from "@/components/modules/guide/tour/TourTable"
-import ManagementPageHeader from "@/components/shared/ManagementPageHeader"
 import RefreshButton from "@/components/shared/RefreshButton"
 import { getGuideTours } from "@/services/tour/tour.service"
 

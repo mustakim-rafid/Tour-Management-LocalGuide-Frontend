@@ -4,7 +4,7 @@ import { Mail, MapPin, Phone } from "lucide-react"
 
 export default function Contact() {
   return (
-    <section className="py-20 bg-background">
+    <section className="py-20 bg-linear-to-r from-primary/5 via-secondary/5 to-accent/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-2 gap-12">
           {/* Contact Info */}

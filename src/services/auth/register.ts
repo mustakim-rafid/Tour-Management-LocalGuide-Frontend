@@ -32,9 +32,9 @@ export const register = async (_initialState: any, formData: FormData) => {
 
     newFormData.set("user", JSON.stringify(user));
 
-    const file = formData.get("file");
+    const file = formData.get("profilePhoto");
     if (file instanceof File && file.size > 0 && file.name !== undefined) {
-      newFormData.set("file", formData.get("file") as Blob);
+      newFormData.append("profilePhoto", file);
     }
 
     let res;

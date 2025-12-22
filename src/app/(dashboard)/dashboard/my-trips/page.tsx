@@ -23,15 +23,18 @@ const BookedTours = async ({
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="space-y-6">
-      <SelectFilter
-        paramName="status"
-        placeholder="Select booking status"
-        options={bookingStatusFilterData.map((status) => ({
-          label: status.label,
-          value: status.value,
-        }))}
-      />
-      <BookingGrid bookings={result.data} />
+        <h1 className="text-3xl font-bold tracking-tight text-foreground">
+          My Trips
+        </h1>
+        <SelectFilter
+          paramName="status"
+          placeholder="Select booking status"
+          options={bookingStatusFilterData.map((status) => ({
+            label: status.label,
+            value: status.value,
+          }))}
+        />
+        <BookingGrid bookings={result.data} />
       </div>
     </div>
   );

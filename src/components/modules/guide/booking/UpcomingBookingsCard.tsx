@@ -18,6 +18,13 @@ import { toast } from "sonner";
 import { completeBooking } from "@/services/booking/booking.service";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 interface UpcomingBookingsCardProps {
   tour: ITour;
@@ -29,36 +36,36 @@ export default function UpcomingBookingsCard({
   const confirmedBookings = tour.bookings!;
   const today = new Date();
   const isCompleted = isBefore(new Date(tour.tourDate), today);
-  const [isTourCompleted, setIsTourCompleted] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [_, startTransition] = useTransition()
-  const router = useRouter()
+  const [isTourCompleted, setIsTourCompleted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [_, startTransition] = useTransition();
+  const router = useRouter();
 
   const handleMarkCompleted = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     const confirmedBookingIds = confirmedBookings.map((b) => b.id);
 
     if (!confirmedBookingIds || confirmedBookingIds.length === 0) {
       toast.error("No confirmed bookings to complete.");
       return;
     }
-    
+
     try {
-      const result = await completeBooking(confirmedBookingIds)
+      const result = await completeBooking(confirmedBookingIds);
       if (!result.success) {
-        toast.error(result.message || "Completing bookings failed")
-        return
+        toast.error(result.message || "Completing bookings failed");
+        return;
       }
-      toast.success(result.message)
-      setIsTourCompleted(true)
+      toast.success(result.message);
+      setIsTourCompleted(true);
       startTransition(() => {
-        router.refresh()
-      })
+        router.refresh();
+      });
     } catch (error: any) {
-      console.log(error)
-      toast.error(error.message || "Completing bookings failed")
+      console.log(error);
+      toast.error(error.message || "Completing bookings failed");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   };
 
@@ -103,30 +110,53 @@ export default function UpcomingBookingsCard({
           <span className="font-semibold">BDT {tour.tourFee}</span>
         </div>
 
-        {/* Bookings List */}
-        <div className="pt-2">
-          {confirmedBookings.map((booking) => (
-            <div
-              key={booking.id}
-              className="flex items-center justify-between border-b py-1"
-            >
-              <span>{booking.tourist.name}</span>
-              <div className="space-x-2">
-                <Badge className="text-xs bg-green-500">{booking.status}</Badge>
-                <Badge
-                  className={cn(
-                    "text-xs",
-                    booking.paymentStatus === "PAID"
-                      ? "bg-green-600 text-white"
-                      : "bg-yellow-500 text-black"
-                  )}
-                >
-                  {booking.paymentStatus}
-                </Badge>
+        {/* SHOW BOOKINGS BUTTON & DIALOG */}
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button className="w-full">
+              Show Bookings
+            </Button>
+          </DialogTrigger>
+
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <DialogTitle>Bookings list</DialogTitle>
+            </DialogHeader>
+
+            {confirmedBookings.length === 0 ? (
+              <p className="text-sm text-muted-foreground">No bookings yet.</p>
+            ) : (
+              <div className="max-h-64 overflow-y-auto space-y-1 pt-2">
+                {confirmedBookings.map((booking) => (
+                  <div
+                    key={booking.id}
+                    className="flex items-center justify-between border-b border-muted py-2"
+                  >
+                    <span className="text-sm font-medium">
+                      {booking.tourist.name}
+                    </span>
+
+                    <div className="space-x-2">
+                      <Badge className="text-xs bg-green-500">
+                        {booking.status}
+                      </Badge>
+                      <Badge
+                        className={cn(
+                          "text-xs",
+                          booking.paymentStatus === "PAID"
+                            ? "bg-green-600 text-white"
+                            : "bg-yellow-500 text-black"
+                        )}
+                      >
+                        {booking.paymentStatus}
+                      </Badge>
+                    </div>
+                  </div>
+                ))}
               </div>
-            </div>
-          ))}
-        </div>
+            )}
+          </DialogContent>
+        </Dialog>
 
         {/* Mark as completed button */}
         {isCompleted && !isTourCompleted && (

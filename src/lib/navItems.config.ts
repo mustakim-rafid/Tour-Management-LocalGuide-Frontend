@@ -82,11 +82,11 @@ export const getCommonNavMainItemsByRole = (userRole: UserRole): INavMain[] => {
       isActive: true,
       items: [
         {
-          title: "Overview",
+          title: "Home page",
           url: "/"
         },
         {
-          title: "My dashboard",
+          title: "Overview",
           url: getDefaultDashboardRoute(userRole),
         },
       ],

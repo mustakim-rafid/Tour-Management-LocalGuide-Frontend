@@ -1,4 +1,4 @@
-export const dynamic = "force-dynamic"; 
+export const dynamic = "force-dynamic";
 
 import TourGrid from "@/components/modules/tour/TourGrid";
 import RefreshButton from "@/components/shared/RefreshButton";
@@ -7,6 +7,11 @@ import SelectFilter from "@/components/shared/SelectFilter";
 import TablePagination from "@/components/shared/TablePagination";
 import { formatQueryParams } from "@/lib/formatters";
 import { getAllTours } from "@/services/tour/tour.service";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Local Guide – Tours",
+}
 
 const ToursPage = async ({
   searchParams,
@@ -17,14 +22,13 @@ const ToursPage = async ({
   const queryString = formatQueryParams(queryParamsObj);
 
   const toursResponse = await getAllTours(queryString);
-
   const tours = toursResponse?.data || [];
 
   const totalPages = Math.ceil(
     toursResponse.meta.total / toursResponse.meta.limit
   );
 
-  const tourFeeRanges: { label: string; value: string }[] = [
+  const tourFeeRanges = [
     { label: "Below 500 BDT", value: "lt500" },
     { label: "500 - 1000 BDT", value: "500-1000" },
     { label: "1000 - 2000 BDT", value: "1000-2000" },
@@ -33,43 +37,46 @@ const ToursPage = async ({
   ];
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="space-y-6">
+    <section className="py-10 bg-linear-to-r from-primary/5 via-secondary/5 to-accent/5">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         {/* Header */}
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Explore Tours</h1>
-          <p className="text-muted-foreground mt-2">
+        <div className="space-y-3">
+          <h1 className="text-4xl font-bold tracking-tight text-foreground">
+            Explore Tours
+          </h1>
+          <p className="text-lg text-muted-foreground max-w-2xl">
             Discover exciting travel experiences and book your next adventure
-            with our expert guides
+            with expert local guides.
           </p>
         </div>
 
         {/* Filters */}
-        <div className="flex gap-3">
+        <div className="flex flex-wrap gap-3 items-center">
           <SearchFilter />
 
           <SelectFilter
             paramName="tourFeeRange"
-            placeholder="Select tour fee range"
-            options={tourFeeRanges.map((eachRange) => ({
-              label: eachRange.label,
-              value: eachRange.value,
-            }))}
+            placeholder="Tour fee range"
+            options={tourFeeRanges}
           />
 
           <RefreshButton />
         </div>
 
         {/* Tour Grid */}
-        <TourGrid tours={tours} />
+        <div>
+          <TourGrid tours={tours} />
+        </div>
 
         {/* Pagination */}
-        <TablePagination
-          currentPage={toursResponse?.meta?.page || 1}
-          totalPages={totalPages || 1}
-        />
+        <div className="pt-6">
+          <TablePagination
+            currentPage={toursResponse?.meta?.page || 1}
+            totalPages={totalPages || 1}
+          />
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

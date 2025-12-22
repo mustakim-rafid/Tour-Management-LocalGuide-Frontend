@@ -1,9 +1,14 @@
 import { Button } from "@/components/ui/button";
+import { getStats } from "@/services/home/home.service";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Hero() {
+export default async function Hero() {
+  const result = await getStats()
+
+  const { users, counts } = result.data
+
   return (
     <section className="relative overflow-hidden from-primary/5 via-background to-background pt-14 pb-32">
       {/* Decorative elements */}
@@ -54,21 +59,21 @@ export default function Hero() {
             {/* Stats */}
             <div className="grid grid-cols-3 gap-6 pt-8 border-t border-border/50">
               <div>
-                <div className="text-3xl font-bold text-primary">500+</div>
+                <div className="text-3xl font-bold text-primary">{counts.tours || 0}</div>
                 <div className="text-sm text-muted-foreground">
                   Tours Available
                 </div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-primary">50K+</div>
+                <div className="text-3xl font-bold text-primary">{users.tourists || 0}</div>
                 <div className="text-sm text-muted-foreground">
                   Happy Travelers
                 </div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-primary">100+</div>
+                <div className="text-3xl font-bold text-primary">{users.guides || 0}</div>
                 <div className="text-sm text-muted-foreground">
-                  Destinations
+                  Total guides
                 </div>
               </div>
             </div>

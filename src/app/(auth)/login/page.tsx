@@ -8,6 +8,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Local Guide – Login",
+}
 
 const LoginPage = async ({
   searchParams,
@@ -18,7 +23,7 @@ const LoginPage = async ({
   const { redirect } = params;
 
   return (
-    <div className="flex min-h-screen w-full items-center justify-center p-3">
+    <div className="flex min-h-screen w-full items-center justify-center p-3 bg-linear-to-r from-primary/5 via-secondary/5 to-accent/5">
       <div className="w-full max-w-2xl">
         <Card>
           <CardHeader>

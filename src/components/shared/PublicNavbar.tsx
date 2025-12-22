@@ -31,9 +31,10 @@ export async function PublicNavbar() {
     { label: "Home", href: "/" },
     { label: "Explore Tours", href: "/tours" },
     ...(!decodedToken ? [{ label: "Become a Guide", href: "/register" }] : []),
-
     { label: "About", href: "/about" },
     { label: "Contact", href: "/contact" },
+    { label: "FAQ", href: "/frequently-asked-questions" },
+    { label: "Policy", href: "/policy" },
     ...(decodedToken
       ? [
           {
